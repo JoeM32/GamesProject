@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4aa0b3d4c5dcf2543ba4a47a6831e333
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - staminaBar: {fileID: 6984446760827073891, guid: 1a7dd33118cdead4d83b7b9a4918c7ee, type: 3}
+  - healthBar: {fileID: 4035011094180846087, guid: 117e8c8bf7fa11c408936d6757f33de4, type: 3}
+  - debugger: {fileID: 2796726665065246811, guid: f4c960fc0d15adf4e8c1fcd3f35669f9, type: 3}
+  - console: {fileID: 6322221485334515797, guid: 284737859b12ffe4191b668f14d37de6, type: 3}
+  - mainMenu: {fileID: 8957217920576488437, guid: df7998c13eb1f184db1ddc982bf8c1b2, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
