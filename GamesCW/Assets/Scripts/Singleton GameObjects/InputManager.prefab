@@ -43,5 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444a9810a2467254390cce6662557952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wibble: 2
   playerbubble: 5
+  parryTimeout: 0.2
+  timeout: 5
+  swipeTimeout: 0.5
+  swipeLength: 25

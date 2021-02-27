@@ -183,5 +183,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fcf101565f13ea4aa8ec05ba575b04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugCount: 5
+  debugCount: 10
   statement: {fileID: 3468275308809978740}

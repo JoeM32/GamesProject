@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public Console console;
     public MainMenu mainMenu;
     public EndScreen endScreen;
+    public WaveAnnouncer waveAnnouncer;
     // Start is called before the first frame update
     void Awake()
     {

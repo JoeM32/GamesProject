@@ -34,14 +34,16 @@ public class Console : MonoBehaviour
             case "help":
                 Debug.Log(
                     "1 -\"help\": You already know this one!\n" +
-                    "2 -\"immortality\": Applies autoparry so you are effectively immortal.\n" +
+                    "2 -\"immortality\": Negative player health never ends the game.\n" +
                     "3 -\"pause\": Sets Time.deltaTime to 0, hopefully pausing the game.\n" +
                     "4 -\"unpause\": Sets Time.deltaTime to 1, hopefully unpausing the game.\n" +
-                    "5 -\"hurt\": Take some damage."
+                    "5 -\"end\": Ends the game.\n" +
+                    "6 -\"hurt\": Take some damage."
                     );
                 break;
             case "immortality":
-                Debug.Log("IMMORTALITY");
+                player.immortality = !player.immortality;
+                Debug.Log("IMMORTALITY -" + player.immortality);
                 break;
             case "pause":
                 Debug.Log("PAUSED");
@@ -54,6 +56,10 @@ public class Console : MonoBehaviour
             case "hurt":
                 Debug.Log("FEELING THE PAIN");
                 player.CurrentHealth -= 10;
+                break;
+            case "end":
+                Debug.Log("DEATH");
+                player.CurrentHealth = -1;
                 break;
             default:
                 Debug.Log("Unkown Command\n" +
