@@ -94,7 +94,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 998662240831615697}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1cd197cd76ac29498172bddbb924f65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectile: {fileID: 1662465065103888556, guid: b0dd931008cfc84429019a1c000f6d18, type: 3}
+  infiniteStamina: 0
   immortality: 0
   dodgeCurve:
     serializedVersion: 2
@@ -139,6 +141,8 @@ MonoBehaviour:
   ParryWindow: 0.5
   dodgeRange: 5
   maxHealth: 100
+  staminaRegenSpeed: 0.1
+  staminaRegenAmount: 1
   maxStamina: 100
 --- !u!143 &3919980393751555924
 CharacterController:

@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
         staminaBar = Instantiate(staminaBar, transform);
         debugger = Instantiate(debugger, transform);
         console = Instantiate(console, transform);
+        waveAnnouncer = Instantiate(waveAnnouncer, transform);
     }
 
     public void setPlayer(Player player)

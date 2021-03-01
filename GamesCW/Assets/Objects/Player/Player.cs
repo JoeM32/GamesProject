@@ -14,7 +14,11 @@ public enum ActionType
 };
 public class Player : MonoBehaviour
 {
+    public Projectile projectile;
+
+
     CharacterController cc;
+    public bool infiniteStamina = false;
     public bool immortality = false;
 
     [SerializeField]
@@ -58,9 +62,9 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField]
-    private float staminaRegenSpeed = 1;
+    private float staminaRegenSpeed = 0.1f;
     [SerializeField]
-    private int staminaRegenAmount = 10;
+    private int staminaRegenAmount = 1;
     [SerializeField]
     private int maxStamina;
     private int currentStamina;
@@ -84,9 +88,15 @@ public class Player : MonoBehaviour
             {
                 currentStamina = value;
             }
+
+            if (infiniteStamina == true)
+            {
+                currentStamina = maxStamina;
+            }
+
             if (staminaChange != null)
             {
-                staminaChange((float)currentStamina / (float)maxStamina);
+                staminaChange((float)currentStamina / (float)maxStamina);//change to invoke
             }
         }
     }
@@ -97,6 +107,10 @@ public class Player : MonoBehaviour
         CurrentStamina = maxStamina;
         cc = transform.GetComponent<CharacterController>();
         StartCoroutine(StaminaRegeneration());
+
+
+        //Bodge fix do not ship lmao gonna do it anyway but fr dont forget about this!!!!!! dunno why Unity aint updating inspector value
+
     }
 
     private void Update()
@@ -130,9 +144,81 @@ public class Player : MonoBehaviour
 
     }
 
-    public void Attack(Vector3 direction, float time)
+
+    //MASSIVE REWORK REQUIRED BELOW!!!!!!!!!!
+
+
+    public void Attack(Vector3 direction, float time)//all nees to be encloded in Weapon which is its own scriptable object, with its own coroutines and prefab hitboxes.
     {
         Debug.Log("Attacking towards - " + direction);//direction is NOT realtive to player yet, it is simple the ponit in space the attack should face
+        if(time < 0.1f && CurrentStamina >= 20)
+        {
+            Debug.Log("Swipe Attack");
+            CurrentStamina -= 20;
+            StartCoroutine(Swipe(direction - transform.position));
+        }
+        else if(time < 1f && CurrentStamina >= 30)//would like to subtract the window from Swipe from time, allwoing you to set this as a window of 2
+        {
+            Debug.Log("Shoot Attack");
+            CurrentStamina -= 30;
+            StartCoroutine(Shoot(direction - transform.position));
+        }
+        else if (currentStamina >= 60)
+        {
+            Debug.Log("Beam Attack");
+            CurrentStamina -= 60;
+            StartCoroutine(Beam(direction - transform.position));
+        }
+
+
+    }
+
+    IEnumerator Swipe(Vector3 direction)
+    {
+        float timer = 0;
+        Projectile projectileInstance = Instantiate(projectile, transform.position + direction.normalized, Quaternion.LookRotation(direction.normalized, Vector3.up));
+        projectileInstance.speed = 2;
+        projectileInstance.damage = 60;
+        projectileInstance.transform.localScale *= 2;
+        projectileInstance.team = "player";
+        while (timer < 0.2f)
+        {
+            timer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        Destroy(projectileInstance.gameObject);
+        
+    }
+
+    IEnumerator Shoot(Vector3 direction)
+    {
+        float timer = 0;
+        Projectile projectileInstance = Instantiate(projectile, transform.position + direction.normalized, Quaternion.LookRotation(direction.normalized, Vector3.up));
+        projectileInstance.speed = 8;
+        projectileInstance.damage = 70;
+        projectileInstance.team = "player";
+        while (timer < 2f)
+        {
+            timer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        Destroy(projectileInstance.gameObject);
+    }
+
+    IEnumerator Beam(Vector3 direction)
+    {
+        float timer = 0;
+        Projectile projectileInstance = Instantiate(projectile, transform.position + direction.normalized, Quaternion.LookRotation(direction.normalized, Vector3.up));
+        projectileInstance.transform.localScale *= 4;
+        projectileInstance.speed = 4;
+        projectileInstance.damage = 200;
+        projectileInstance.team = "player";
+        while (timer < 5f)
+        {
+            timer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        Destroy(projectileInstance.gameObject);
     }
 
     IEnumerator Parrying()
@@ -168,5 +254,22 @@ public class Player : MonoBehaviour
         }
         while (dodgeCurve.Evaluate(timer) < 1);
         dodging = false;
+    }
+    //ALL PROJECTILE SCRIPTS ARE GARBAGE HERE BE DRAGONS
+
+    private void OnTriggerExit(Collider other)
+    {
+        StartCoroutine(takeDamage(other.GetComponent<Projectile>()));
+    }
+
+    IEnumerator takeDamage(Projectile projectile)
+    {
+        if (projectile.team == "enemy" && dodging == false && parrying == false)
+        {
+            Debug.Log("Player hurt for " + projectile.damage);
+            CurrentHealth -= projectile.damage;
+
+        }
+        yield break;
     }
 }

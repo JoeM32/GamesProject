@@ -24,6 +24,9 @@ public class Main : MonoBehaviour
         CameraControl cameraControl = Camera.main.gameObject.AddComponent<CameraControl>();
         cameraControl.setPlayer(player);
         waveManager = Instantiate(waveManager);
+        waveManager.setPlayer(player.transform);
         waveManager.newWave += uiManager.waveAnnouncer.newWave;
+        waveManager.NewWave();
+        Debug.Log("The red and blue circles are for debugging and serve no purpose but to makr out of range in in range dodges. At release ideally a ring will will appear to remind you where you can dodge to, and the circles will be repalced by vfx");
     }
 }

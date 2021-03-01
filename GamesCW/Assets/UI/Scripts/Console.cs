@@ -38,12 +38,17 @@ public class Console : MonoBehaviour
                     "3 -\"pause\": Sets Time.deltaTime to 0, hopefully pausing the game.\n" +
                     "4 -\"unpause\": Sets Time.deltaTime to 1, hopefully unpausing the game.\n" +
                     "5 -\"end\": Ends the game.\n" +
-                    "6 -\"hurt\": Take some damage."
+                    "6 -\"stam\": Toggles infinite stamina.\n" +
+                    "7 -\"hurt\": Take some damage."
                     );
                 break;
             case "immortality":
                 player.immortality = !player.immortality;
                 Debug.Log("IMMORTALITY -" + player.immortality);
+                break;
+            case "stam":
+                player.infiniteStamina = !player.infiniteStamina;
+                Debug.Log("Infinite Stamina -" + player.infiniteStamina);
                 break;
             case "pause":
                 Debug.Log("PAUSED");

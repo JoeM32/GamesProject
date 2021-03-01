@@ -17,6 +17,9 @@ public class WaveAnnouncer : MonoBehaviour
         StartCoroutine(waveGraphic(wave));
     }
 
+
+    //Needs work below - a full ui squidger for juice preferably
+
     IEnumerator waveGraphic(int wave)
     {
         
@@ -25,9 +28,10 @@ public class WaveAnnouncer : MonoBehaviour
         while(size < 120)
         {
             text.fontSize = size;
-            size += 2;
+            size += 1;
             yield return new WaitForEndOfFrame();
         }
+        yield return new WaitForSeconds(0.2f);
         text.text = "";
     }
 }
